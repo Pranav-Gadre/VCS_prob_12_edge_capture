@@ -78,8 +78,8 @@ module edge_capture (
 	
 	always @ (*) begin 
 		for (iter = 0; iter <= 31; iter = iter+1) begin
-			edge_reg[iter] = (reset) ? 0 :
-							 ((data_i_past[iter] == 1) && (data_i[iter] == 0)) ? 1 : edge_reg[iter];
+			edge_reg[iter] <= (reset) ? 0 :
+							  ((data_i_past[iter] == 1) && (data_i[iter] == 0)) ? 1 : edge_reg[iter];
 			
 		end
 	end
