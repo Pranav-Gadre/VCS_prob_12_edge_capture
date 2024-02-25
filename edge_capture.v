@@ -59,5 +59,30 @@ module edge_capture (
 
 	// Write your logic here...
 	
+	reg      [31:0] data_i_past;
+	reg      [31:0] edge_reg;
+	integer  iter;
+	// reg    [4:0] iter;
+	
+	
+	assign edge_o = edge_reg;
+	
+	
+	always @ (posedge clk or posedge reset) begin 
+		if (reset) begin 
+			data_i_past <= 0;
+		end else begin
+			data_i_past <= data_i;
+		end	
+	end
+	
+	always @ (*) begin 
+		for (iter = 0; iter <= 31; iter = iter+1) begin
+			edge_reg[iter] = (reset) ? 0 :
+							 ((data_i_past[iter] == 1) && (data_i[iter] == 0)) ? 1 : edge_reg[iter];
+			
+		end
+	end
+	
 	
 endmodule
